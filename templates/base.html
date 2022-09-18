@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/master.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/noob_styles.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/modern.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/plyr@3.5.6/dist/plyr.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@animxyz/core">
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3.5.6/dist/plyr.js"></script>
+    <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Asap&family=Hind+Siliguri&family=Josefin+Sans&family=Oxygen&family=Roboto?family=Noto+Sans?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <!-- <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script> -->
+    <link rel="shortcut icon" id="icon" href="{{ url_for('static',filename='assets/icons/icon.ico') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static',filename='assets/icons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static',filename='assets/icons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static',filename='assets/icons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static',filename='assets/icons/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ url_for('static',filename='assets/icons/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-TileImage" content="{{ url_for('static',filename='assets/icons/mstile-144x144.png') }}">
+    <meta name="theme-color" content="#ffffff">
+    <title>YTSpider 🕸: A Private YouTube Spider</title>
+</head>
+<nav style="background-color: #212121; padding: 12px;">
+    <div class="container-fluid" style="padding-top: 0.2rem;">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/" class="title_link title hover_animation_underline">
+                    <b>YTSPIDER</b>
+                </a>
+            </div>
+            <div class="col-md-6 text-end" style="margin-top: 1%;">
+                <form class="d-flex" autocomplete="off" action="/results_temp" method="post">
+                    <input class="form-control me-2" list="sqs" type="search" id="ytsearch" name="search_query" placeholder="Ask Me Stuff" aria-label="Search">
+                    <datalist id="sqs"></datalist>
+                    <button class="btn btn-outline-info" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<div id="hide_div">
+    <div class="d-grid gap-2" style="margin-left: 4%; margin-right: 4%; margin-top: 12px; margin-bottom: 12px;">
+        <button class="btn btn-dark" id="hide_btn" style="background-color: rgb(115, 35, 243);"><i class="bi bi-eye"></i> Hide Actual Content and Replace with a sincere youtube video</button>
+    </div>
+</div>
+<div id="video_alt" style="text-align: center; border-radius: 12px; margin-left: 4%; margin-right: 4%;">
+    <div class="d-grid gap-2" style="margin-left: 4%; margin-right: 4%; margin-top: 12px; margin-bottom: 12px;">
+        <button class="btn btn-dark" id="remove_btn" style="background-color: rgb(115, 35, 243);"><i class="bi bi-hide"></i> Remove The Video you were watching from history</button>
+    </div>
+</div>
+<body id="body">
+    <div id="actual_body">
+        {% block body %} {% endblock %}
+    </div>
+</body>
+<footer style="padding: 2%;">
+    <div style="text-align: center; background-color: #212121; margin-left: 20%; margin-right: 20%; padding: 1%; border-radius: 12px;">
+        <h2 class="title">Made with ❤️ by &copy NoobScience</h2>
+    </div>
+</footer>
+<script type="text/javascript">
+    console.log("YTSpider Ready to be Deployed")
+    console.log("YTSpider Deployed")
+    console.log("YTSpider is doing spider stuff successfully")
+    $(document).ready(function(){
+        $("#video_alt").toggle()
+        $.ajax({
+            type: "get",
+            url: "/video",
+            contentType: "application/json",
+            data: JSON.stringify({hello: "world"}),
+            dataType: "json",
+            success: function(response) {
+                $("#video_alt").append(response.content)
+                console.log(response)
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        })
+        $("#hide_btn").click(function(){
+            $("#video_alt").toggle()
+            $("#actual_body").toggle()
+            $("nav").toggle()
+            $("footer").toggle()
+            document.title = "Playing Educational Video"
+            // document.documentElement.requestFullscreen();
+        })
+        $("#remove_btn").click(function(){
+            window.location.replace("/quotes")
+        })
+        $("#ytsearch").keyup(function(){
+            var query = $("#ytsearch").val()
+            $.ajax({
+                type: "POST",
+                url: "/suggest/" + query,
+                contentType: "application/json",
+                data: JSON.stringify({hello: "world"}),
+                dataType: "json",
+                success: function(response) {
+                    $.each(response.result, function(index, value){
+                        $("#sqs").append("<option value='" + value + "'></option>")
+                    });
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script>
+</html>

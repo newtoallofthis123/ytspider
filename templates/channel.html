@@ -1,0 +1,40 @@
+<title>YTSpider: {{ id_info["name"] }}</title>
+
+{% extends 'base.html' %}
+
+{% block body %}
+	<!-- <div style="background-color: #282923;">
+		<div style="text-align: center;"><img src="{{ id_info['bannerUrl'] }}"></div>
+		<div style="padding: 28px; text-align: center; border-width: 5px; border-color: lightpink; border-style: double;"><img src="{{ id_info['avatarUrl'] }}"><span style="color: indianred; font-size: 1.4em; padding-left: 12px;">{{ id_info['name'] }}</span><span style="color: whitesmoke; font-size: 1.4em;"> has</span><span style="color: limegreen; font-size: 1.4em; padding-left: 12px;">{{ id_info['subscriberCount'] }}</span><span style="color: whitesmoke; font-size: 1.4em;"> subscribers.</span></div>
+		<div class="container">
+			<div class="row">
+				{% for item in id_info['relatedStreams'] %}
+					<div class="col-3" style="padding-top: 5px; padding-bottom: 12px;">
+						{% set url = item['url'].split("watch?v=")[1] %}
+						<a href="/play/{{ url }}"><img src="{{ item['thumbnail'] }}" width="246" height="147"></a><br>
+						<a href="/play/{{ url }}" class="link_title">{{ item["title"] }}</a><br>
+						<span style="color: whitesmoke; font-size: 1em;">Views: </span><span class="text" style="color: #F91010; font-size: 1em">{{ item["views"] }}</span><br>
+						<span class="text" style="color: #68F910; font-size: 1em;">{{ item["uploadedDate"] }}</span>
+					</div>	
+				{% endfor %}
+			</div>
+		</div>
+	</div> -->
+	<div class="container-fluid" style="border-width: 5%; border-color: #212121;">
+		<div style="text-align: center;"><img src="{{ id_info['bannerUrl'] }}"></div>
+		<div class="row" style="display: flex; justify-content: center;">
+			<h2 class="heading"><i class="bi bi-youtube" style="color: red; font-size: 38px;"></i> Showing you the Channel of <img src="{{ id_info['avatarUrl'] }}" style="margin-left: 0.8rem; margin-right: 0.8rem;"><span style="color:rgb(248, 7, 7);">{{ id_info["name"] }}</span></h2>
+			{% for result in id_info['relatedStreams'] %}
+				<div class="col-md-3" style="background-color: #f5f1f1; border-radius: 12px; padding: 2%; margin: 1%; text-align: center; display: block;">
+					{% set result_url = result['url'].split('watch?v=')[1] %}
+					<div style="text-align: center; padding: 12px;">
+						<a href="/play/{{ result_url }}"><img src="{{ result['thumbnail'] }}" style="border-radius: 12px;"></a><br>
+					</div>
+					<a class="text_link" href="/play/{{ result_url }}" style="color: rgb(29, 27, 27); padding-left: 5px; margin-top: 10px;">{{ result['title'] }}</a><br>
+					<span style="color: rgb(19, 18, 18); font-size: 1em;">Views: </span><span class="text" style="color: #0e38f3; font-size: 1em">{{ result["views"] }}</span><br>
+					<p class="text" style="color: rgb(27, 26, 26); margin-left: 5%">{{ result['uploadedDate'] }}</p>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

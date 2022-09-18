@@ -1,0 +1,24 @@
+audio{
+    width: 300px;
+    transition-delay: 20ms;
+    transition-duration: 1.5s;
+}
+audio:hover {transform: scale(1.1);filter: drop-shadow(2px 3px 3px #5c00ff);}
+video{
+    transition-delay: 20ms;
+    transition-duration: 1.5s;
+}
+video:hover {transform: scale(1.1);filter: drop-shadow(2px 3px 3px #5c00ff);}
+
+.text_link{
+    text-decoration: none;
+    font-family: "Josfin Sans", sans-serif;
+    font-size: 1.2rem;
+    color: #212121;
+    transition-delay: 50ms;
+    transition-duration: 1s;
+}
+
+.text_link:hover{
+    color: rgb(250, 246, 9);
+}

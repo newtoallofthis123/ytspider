@@ -1,0 +1,102 @@
+<title>YTSpider: {{url_info["title"]}}</title>
+
+{% extends 'base.html' %}
+
+{% block body %}
+    <style type="text/css">
+        :root{
+            --plyr-color-main: #282923;
+        }
+    </style>
+    <div style="text-align: center;">
+        <h2 class="title" style="color: #212121; font-size: 24px; padding: 1%;"><span style="color: red;"><i class="bi bi-youtube"></i></span> <span style="color: rgb(12, 131, 243); text-decoration: underline; text-decoration-color: rgb(12, 131, 243);">Now Playing: </span> {{ url_info["title"] }}</h2>
+        <div id="player_div" style="margin-right: 10%; margin-left: 10%;">
+            <video width="900" height="480" id="player" playsinline controls data-poster="{{ url_thumnail }}">
+                <source src="{{ url_stream[0] }}" type="video/webm" size="720">
+                <source src="{{ url_stream[1] }}" type="video/webm" size="360">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div style="padding: 12px;">
+            <span id="wrong">Please Click Here If something goes wrong </span><button id="try" class="btn btn-secondary">❌ Error</button>
+        </div>
+        <div id="try_player" style="padding-bottom: 0.8rem;">
+            {% set youtube_embed_link = 'https://www.youtube-nocookie.com/embed/' + url_id %}
+            {% set channel_url = url_info['channel_url'].split('https://www.youtube.com')[1] %}
+            <iframe
+                src="{{ youtube_embed_link }}"
+                allowfullscreen
+                allowtransparency
+                allow="autoplay"
+                width="900"
+                height="480"
+            ></iframe>
+        </div>
+    </div>
+    <div style="text-align: center; background-color: #212121; margin-left: 10%; margin-right: 10%; border-radius: 12px;">
+        <a href="{{ channel_url }}" class="des_link" style="text-align: center; font-size: 38px; text-decoration: underline; text-decoration-thickness: 5px;">{{ url_info["uploader"] }}</a>
+        <p style="color: rgb(97, 247, 11); font-size: 24px; padding-top: 0.8rem;">👀 Views: <span style="color: rgb(238, 232, 232);">{{ url_info["view_count"] }}</span></p> 
+        <p style="color: rgb(14, 241, 192); font-size: 24px; padding-bottom: 1.2rem;">👍🏻 Likes: <span style="color: rgb(238, 232, 232);">{{ url_info["like_count"] }}</span></p> 
+    </div>
+    <div class="accordion accordion-flush" id="accordionFlushExample" style="margin-left: 10%; margin-right: 10%;">
+        <div class="accordion-item" style="background: linear-gradient(to right, rgb(243, 25, 25), rgb(9, 25, 248));">
+            <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                🔽 View Description
+            </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <div id="desc" style="background-color: #212121; padding: 2%;">
+                    {% for text in url_description %}
+                        <p class="lead" style="color: rgb(236, 231, 231); font-size: 18px;">{{ text }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div style="background-color: #212121; padding: 1.4rem; margin-top: 0.8rem; margin-right: 10%; margin-left: 10%; border-radius: 12px; text-align: center;">
+        <h2 class="lead" style="color: rgb(252, 22, 22);"><i class="bi bi-person-square"></i> The Above Video is the exclusive property of Google LLC and the channel owner. Please don't Misuse the Video</h2>
+    </div>
+    <div style="background-color: #212121; padding: 1.2rem; margin-top: 0.8rem; margin-right: 10%; margin-left: 10%; border-radius: 12px; text-align: center;">
+        {% set piped_link = 'https://piped.kavin.rocks/watch?v=' + url_id %}
+        <button class="btn btn-outline-primary"><a href="{{ piped_link }}" class="btn_link">Watch on Piped</a></button>
+        <button class="btn btn-outline-info" style="margin-left: 0.8rem;"><a href="/listen/{{ url_id }}" class="btn_link">Listen to Audio Instead</a></button>
+        <span>
+            <button class="download_btn"><a href="{{ url_stream[0] }}" download="{{ url_info['title'] }}" class="btn_link" style="color: #212121;"> <i class="bi bi-download"></i> Download Video</a></button>
+        </span>
+        <span>
+            <button class="download_btn"><a href="{{ url_audio_stream[0] }}" download="{{ url_info['title'] }}" class="btn_link" style="color: #212121;"><i class="bi bi-music-player"></i> Download Audio</a></button>
+        </span>
+    </div>
+    <script>
+        $('#try_player').hide()
+        const player = new Plyr('#player',{
+            title: "{{ url_info['title'] }}",
+        });
+        $('#try').click(function(){
+            $('#try_player').show()
+            $("#player_div").hide()
+            $("#wrong").replaceWith("Hope you enjoy it Now...Please Refresh to Get Back to the Player")
+            $("#try").hide()
+        });
+        Toastify({
+            text: "By Using YTSpider, You are agreeing to it's Viewer Policy. Click to Know More",
+            duration: 30000,
+            destination: "/license",
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            avatar: "{{ url_for('static',filename='assets/icons/favicon.ico') }}",
+            style: {
+                background: "linear-gradient(to right, #0e2a47, #0e2a36",
+                fontFamily: "Helvetica, sans-serif",
+                borderRadius: "12px",
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
+    </script>
+{% endblock %}

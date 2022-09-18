@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div style="text-align: center;">
+        <p class="lead text">Sorry! The about page for YTSpider is under construction. If you like, you can help contribute <a href="https://github.com/newtoallofthis123/ytSpider" style="color: palevioletred;">here</a>.</p>
+        <a href="/"><img src="{{ url_for('static', filename='assets/images/construction.svg') }}" height="480"></a>
+        <div class="d-grid gap-2" style="margin-left: 4%; margin-right: 4%; margin-top: 12px; margin-bottom: 12px;">
+            <button class="btn btn-dark" style="background-color: rgb(115, 35, 243);"><a href="/" class="btn_link">Enjoy YTSpider</a></button>
+        </div>
+    </div>
+{% endblock %}

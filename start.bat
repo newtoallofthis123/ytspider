@@ -1,0 +1,4 @@
+set FLASK_APP=app
+set FLASK_DEBUG=0
+set FLASK_RUN_PORT=3000
+flask run

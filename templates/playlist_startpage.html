@@ -1,0 +1,11 @@
+<title>PlayList Player</title>
+
+{% extends 'base.html' %}
+
+{% block body %}
+    <div>
+        <form action="{{ url_for("play_temp")}}" method="post" style="padding-left: 20%;">
+            <input type="url" id="ytsearch" name="ytsearch" placeholder="Enter Playlist Url" style="width: 60%;">
+        </form>
+    </div>
+{% endblock %}

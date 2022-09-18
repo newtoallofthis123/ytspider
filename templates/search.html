@@ -1,0 +1,53 @@
+<title>Search Results for : {{ search_title }}</title>
+
+{% extends 'base.html' %}
+
+{% block body %} 
+    <!-- <div style="background-color: #262420;">
+        <h1 class="title_2" style="color: #ecece3; padding-top: 12px; padding-bottom: 2%; text-align: center;"><u>Showing Results for <span><a href="/search/q={{ search_title }}" style="color: forestgreen;">{{ search_title }}</a></span></u></h1>
+        <div class="container">
+                {% for i in items %}
+                    {% set video_url = '/play/' + i["id"] %}
+                    <div class="row align-items-start">
+                        <div class="col-4" style="padding-bottom: 5%"><a href="{{ video_url }}" class="link_white"><img src="{{ i['thumbnails'][0] }}" alt="video thumnail" style="width: 354px; height: 200px;";></a></div>
+                        <div class="col-8">
+                            <p><a href="{{ video_url }}" class="link_title" style="font-size: 1.4em">{{ i["title"] }}  -   </a><span><a href="/listen/{{ i['id'] }}" class="link_title" style="color: whitesmoke; font-size: 1.4em;">🔊</a></span><span><a href="/play/{{ i['id'] }}" class="link_title" style="color: whitesmoke; font-size: 1.4em;">📺</a></span></p>
+                            <p class="text" style="color: #ff1313; font-size: 1.2em;">{{ i["channel"] }}</p>
+                            <p class="text" style="color: #ffce02; font-size: 1.2em;">{{ i["duration"] }}</p>
+                            <p class="text" style="color: #5fff11; font-size: 1.2em;">{{ i["views"] }}</p>
+                            <p class="text" style="color: #00ffa8; font-size: 1.2em;">{{ i["publish_time"] }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+    </div> -->
+    <div class="container-fluid">
+        {% for i in items %}
+            {% set video_url = '/watch?v=' + i["id"] %}
+            {% set audio_url = '/listen/' + i["id"] %}
+            {% set youtube_url = 'https://www.youtube.com/watch?v=' + i["id"] %}
+            {% set piped_url = 'https://piped.kavin.rocks/watch?v=' + i["id"] %}
+            <div class="row" style="padding: 2%; background-color: rgb(240, 235, 235); margin: 1.2rem; border-radius: 12px;">
+                <div class="col-md-4">
+                    <a href="{{ video_url }}"><img src="{{ i['thumbnails'][0] }}" alt="video thumnail" style="width: 354px; height: 200px; border-radius: 12px;";></a>
+                </div>
+                <div class="col-md-4" style="padding-left: 2%;">
+                    <a href="{{ video_url }}" class="des_link_1">{{ i["title"] }}</a>
+                    <p><a href="/c/{{ i['channel'].lower().replace('-', '').replace(' ', '') }}" class="channel_link">{{ i["channel"] }}</a></p>
+                    <p class="des_text">{{ i["duration"] }}</p>
+                    <p class="des_text">{{ i["views"] }}</p>
+                    <p class="des_text">{{ i["publish_time"] }}</p>
+                </div>
+                <div class="col-md-4">
+                    <button class="download_btn"><a href="{{ video_url }}" class="btn_link_1"><i class="bi bi-play"></i> View In Player </a></button>
+                    <p></p>
+                    <button class="download_btn"><a href="{{ audio_url }}" class="btn_link_1"><i class="bi bi-music-note"></i> Listen In Player </a></button>
+                    <p></p>
+                    <button class="download_btn"><a href="{{ youtube_url }}" class="btn_link_1"><i class="bi bi-youtube"></i> Open in YouTube </a></button>
+                    <p></p>
+                    <button class="download_btn"><a href="{{ piped_url }}" class="btn_link_1"><i class="bi bi-box-arrow-up-right"></i> Open in Piped </a></button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
